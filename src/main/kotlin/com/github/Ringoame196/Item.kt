@@ -96,14 +96,18 @@ class Item {
         removeitem(player)
     }
     fun money(player: Player, itemName: String) {
-        val point: Int = when (itemName) {
-            "${ChatColor.GREEN}10p" -> 10
-            "${ChatColor.GREEN}100p" -> 100
-            "${ChatColor.GREEN}1000p" -> 1000
-            else -> { return }
+        val regex = Regex("""§.([0-9]{2,})p""")
+        val match = regex.find(itemName)
+        val pointStr = match?.groupValues?.get(1)
+        try {
+            if (pointStr != null) {
+                val point = pointStr.toInt()
+                Point().add(player, point, false)
+                removeitem(player)
+            }
+        } catch (e: NumberFormatException) {
+            return
         }
-        Point().add(player, point, false)
-        removeitem(player)
     }
     fun removeitem(player: org.bukkit.entity.Player) {
         if (player.gameMode == GameMode.CREATIVE) { return }
