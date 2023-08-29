@@ -95,7 +95,7 @@ class Item {
         }
         removeitem(player)
     }
-    fun money(player: Player, itemName: String) {
+    private fun money(player: Player, itemName: String) {
         val regex = Regex("""§.([0-9]{2,})p""")
         val match = regex.find(itemName)
         val pointStr = match?.groupValues?.get(1)
@@ -109,7 +109,7 @@ class Item {
             return
         }
     }
-    fun removeitem(player: org.bukkit.entity.Player) {
+    private fun removeitem(player: org.bukkit.entity.Player) {
         if (player.gameMode == GameMode.CREATIVE) { return }
         val itemInHand = player.inventory.itemInMainHand
         val oneItem = itemInHand.clone()
